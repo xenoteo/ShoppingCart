@@ -1,6 +1,5 @@
 package com.xgen.interview;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 
@@ -26,14 +25,21 @@ public class ShoppingCart implements IShoppingCart {
     }
 
     public void printReceipt() {
-        Object[] keys = contents.keySet().toArray();
+        int totalPrice = 0;
 
-        for (int i = 0; i < Array.getLength(keys) ; i++) {
-            Integer price = pricer.getPrice((String)keys[i]) * contents.get(keys[i]);
-            Float priceFloat = new Float(new Float(price) / 100);
+        for (String key : contents.keySet()) {
+            int price = pricer.getPrice(key) * contents.get(key);
+            float priceFloat = (float) price / 100;
             String priceString = String.format("€%.2f", priceFloat);
 
-            System.out.println(keys[i] + " - " + contents.get(keys[i]) + " - " + priceString);
+            System.out.println(key + " - " + contents.get(key) + " - " + priceString);
+
+            totalPrice += price;
         }
+
+        float totalPriceFloat = (float) totalPrice / 100;
+        String totalPriceString = String.format("€%.2f", totalPriceFloat);
+        System.out.println("Total: " + totalPriceString);
     }
+    
 }
