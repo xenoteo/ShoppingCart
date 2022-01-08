@@ -19,10 +19,7 @@ public class Pricer {
      * If itemType is an unknown string, store policy is that the item is free.
      */
     public Integer getPrice(String itemType) {
-        if (!pricingDatabase.containsKey(itemType)) {
-            return 0;
-        }
-        return pricingDatabase.get(itemType);
+        return pricingDatabase.getOrDefault(itemType, 0);
     }
 
 }

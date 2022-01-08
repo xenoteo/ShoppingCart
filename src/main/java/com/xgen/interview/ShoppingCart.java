@@ -4,8 +4,7 @@ import java.util.*;
 
 
 /**
- * This is the current implementation of ShoppingCart.
- * Please write a replacement
+ * The implementation of ShoppingCart.
  */
 public class ShoppingCart implements IShoppingCart {
     Map<String, Integer> contents = new LinkedHashMap<>();
@@ -21,12 +20,7 @@ public class ShoppingCart implements IShoppingCart {
     }
 
     public void addItem(String itemType, int number) {
-        if (!contents.containsKey(itemType)) {
-            contents.put(itemType, number);
-        } else {
-            int existing = contents.get(itemType);
-            contents.put(itemType, existing + number);
-        }
+        contents.put(itemType, contents.getOrDefault(itemType, 0) + number);
     }
 
     public void printReceipt() {
@@ -34,22 +28,21 @@ public class ShoppingCart implements IShoppingCart {
 
         for (String key : contents.keySet()) {
             int price = pricer.getPrice(key) * contents.get(key);
-            float priceFloat = (float) price / 100;
-            String priceString = String.format("€%.2f", priceFloat);
+            String priceString = createPriceString(price);
 
-            if (priceFirst) {
-                System.out.println(priceString + " - " + key + " - " + contents.get(key));
-            }
-            else {
-                System.out.println(key + " - " + contents.get(key) + " - " + priceString);
-            }
+            if (priceFirst) System.out.println(priceString + " - " + key + " - " + contents.get(key));
+            else            System.out.println(key + " - " + contents.get(key) + " - " + priceString);
 
             totalPrice += price;
         }
 
-        float totalPriceFloat = (float) totalPrice / 100;
-        String totalPriceString = String.format("€%.2f", totalPriceFloat);
+        String totalPriceString = createPriceString(totalPrice);
         System.out.println("Total: " + totalPriceString);
+    }
+
+    private String createPriceString(int price) {
+        float priceFloat = (float) price / 100;
+        return String.format("€%.2f", priceFloat);
     }
 
 }
