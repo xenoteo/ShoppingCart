@@ -10,9 +10,14 @@ import java.util.*;
 public class ShoppingCart implements IShoppingCart {
     Map<String, Integer> contents = new LinkedHashMap<>();
     Pricer pricer;
+    boolean priceFirst = false;
 
     public ShoppingCart(Pricer pricer) {
         this.pricer = pricer;
+    }
+
+    public void setPriceFirst(boolean priceFirst) {
+        this.priceFirst = priceFirst;
     }
 
     public void addItem(String itemType, int number) {
@@ -32,7 +37,12 @@ public class ShoppingCart implements IShoppingCart {
             float priceFloat = (float) price / 100;
             String priceString = String.format("€%.2f", priceFloat);
 
-            System.out.println(key + " - " + contents.get(key) + " - " + priceString);
+            if (priceFirst) {
+                System.out.println(priceString + " - " + key + " - " + contents.get(key));
+            }
+            else {
+                System.out.println(key + " - " + contents.get(key) + " - " + priceString);
+            }
 
             totalPrice += price;
         }
