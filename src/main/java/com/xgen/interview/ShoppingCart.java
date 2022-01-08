@@ -8,7 +8,7 @@ import java.util.*;
  * Please write a replacement
  */
 public class ShoppingCart implements IShoppingCart {
-    HashMap<String, Integer> contents = new HashMap<>();
+    Map<String, Integer> contents = new LinkedHashMap<>();
     Pricer pricer;
 
     public ShoppingCart(Pricer pricer) {
@@ -41,5 +41,5 @@ public class ShoppingCart implements IShoppingCart {
         String totalPriceString = String.format("€%.2f", totalPriceFloat);
         System.out.println("Total: " + totalPriceString);
     }
-    
+
 }
